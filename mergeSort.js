@@ -33,39 +33,36 @@ const mergeSort = function (arr) {
   if (arr.length <= 1) return arr;
   const half = Math.round(arr.length / 2);
   // console.log(half);
-
   /**
-   * Questo potrebbe confondere ma è importante notare che il return qui sotto avviene solo 1 volta
-   * ovvero quando tutte le altre merge sort ricorsive sono finite, questo perche ? perche succede
-   * che tutte le merge sort ricorsive dopo la prima verranno sempre richiamate fin quando l'array non
-   * diventa di un elemento, e a quel punto sara la condizione sopra a far ritornare la funzione, facendo
-   * ritornare un solo numero alla volta !
-   * ecco un esempio !
+   * This might be confusing, but it's important to note that the return statement below occurs only once,
+   * namely when all other recursive merge sorts have finished. This is because all subsequent recursive merge sorts
+   * will always be invoked until the array becomes a single element, at which point the condition above will cause
+   * the function to return, resulting in only one number being returned at a time!
+   * Here's an example!
    *
    * input [2,5,20,10,1,4]
    *
-   *  => dividiamo a meta
+   * => divide in half
    *
    * [2,5,20] [10,1,4]
    *
-   * =>  dividiamo a meta ( per semplicita da ora in avanti procedermo con il primo array, ma lastessa
-   *      cosa succede con il secondo)
+   * => divide in half (for simplicity, we'll proceed with the first array from now on, but the same
+   * thing happens with the second one)
    *
    * [2] [5,20]
    *
-   * a qeusto punto il 2 è di un elemento, quindi quando verra passato come argomento alla funzione
-   * di mergeSort ricorsivaemnte si attivera il controlo if(arr.lenght <= 1) return arr
-   * quindi il 2 viene ritornato !
-   * l'altro array continua ad essere divisio !
-   *
-   * [5]  // lunghezza 1 => si attiva if(arr.lenght <= 1) return arr
-   *
-   * [20]  // lunghezza 1 => si attiva if(arr.lenght <= 1) return arr
-   *
-   * quando tutti gli array vengono ritornati avviene i
+   * At this point, 2 is a single element, so when it is passed as an argument to the recursive mergeSort function,
+   * the if(arr.length <= 1) return arr condition will be triggered, and the 2 will be returned!
+   * The other array continues to be divided!
+   * [5] // length 1 => if(arr.length <= 1) is triggered and returns arr
+   * [20] // length 1 => if(arr.length <= 1) is triggered and returns arr
+   * When all arrays have been returned, the process occurs.
    */
 
-  const sortedSubArrays = sort(mergeSort(arr.slice(0, half)), mergeSort(arr.slice(half, arr.length)));
+  const sortedSubArrays = sort(
+    mergeSort(arr.slice(0, half)),
+    mergeSort(arr.slice(half, arr.length))
+  );
   // console.log(sortedSubArrays);
   return sortedSubArrays;
 };
@@ -88,7 +85,9 @@ const sort = function (arr1, arr2) {
   return merge;
 };
 
-console.time('timer1');
-res = mergeSort([416, 782, 259, 564, 633, 938, 798, 498, 694, 62, 937, 681, 28, 830, 480, 176]);
-console.timeEnd('timer1');
+console.time("timer1");
+res = mergeSort([
+  416, 782, 259, 564, 633, 938, 798, 498, 694, 62, 937, 681, 28, 830, 480, 176,
+]);
+console.timeEnd("timer1");
 console.log(res);
